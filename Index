@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ViviPilates — Colourful Reformer Studio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #FFFCF5;
+      font-family: 'Inter', sans-serif;
+      color: #221C1A;
+    }
+
+    .gradient-bg {
+      background: linear-gradient(135deg, #FFE6F0 0%, #FFE0D4 50%, #FFF0C0 100%);
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    /* Navigation */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 0;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(130deg, #E86F4F, #C73B6E);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      cursor: pointer;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #2D2A28;
+      font-weight: 500;
+      transition: 0.2s;
+      cursor: pointer;
+    }
+
+    .nav-links a:hover {
+      color: #E86F4F;
+    }
+
+    .btn-outline {
+      border: 2px solid #E86F4F;
+      padding: 8px 20px;
+      border-radius: 60px;
+      font-weight: 600;
+      background: white;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: #E86F4F;
+      color: white;
+      padding: 12px 28px;
+      border-radius: 60px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 4px 12px rgba(232,111,79,0.3);
+    }
+
+    .btn-primary:hover {
+      background: #C73B6E;
+      transform: scale(1.02);
+    }
+
+    .btn-secondary {
+      background: #FFEADF;
+      color: #E86F4F;
+      padding: 10px 24px;
+      border-radius: 60px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin: 48px 0 24px;
+      letter-spacing: -0.01em;
+    }
+
+    /* Page container */
+    .page {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Cards & Grids */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+      margin: 32px 0;
+    }
+
+    .fun-card, .class-card, .plan-card {
+      background: white;
+      border-radius: 32px;
+      padding: 32px 24px;
+      border: 1px solid #FFE3D6;
+      text-align: center;
+      transition: all 0.25s ease;
+    }
+
+    .fun-card:hover, .class-card:hover, .plan-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+    }
+
+    /* Timetable */
+    .timetable {
+      background: white;
+      border-radius: 48px;
+      padding: 32px;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.05);
+      border: 1px solid #FFE2D4;
+      margin: 40px 0;
+    }
+
+    .class-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #F0E2D8;
+      padding: 18px 0;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .class-time {
+      font-weight: 700;
+      background: #FFF0E4;
+      padding: 4px 14px;
+      border-radius: 40px;
+    }
+
+    .btn-small {
+      background: #FFEADF;
+      border: none;
+      padding: 6px 20px;
+      border-radius: 40px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    /* Membership */
+    .membership-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 32px;
+      margin: 32px 0;
+    }
+
+    .plan-card {
+      text-align: center;
+    }
+
+    .plan-popular {
+      border: 2px solid #E86F4F;
+      background: #FFF9F5;
+      transform: scale(1.02);
+    }
+
+    .price {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin: 16px 0;
+      color: #E86F4F;
+    }
+
+    /* Members Area */
+    .members-area {
+      background: linear-gradient(120deg, #FEF0E4, #FFE8F0);
+      border-radius: 56px;
+      padding: 48px 40px;
+      margin: 64px 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 48px;
+      justify-content: space-between;
+    }
+
+    .login-card {
+      background: white;
+      border-radius: 40px;
+      padding: 32px;
+      flex: 1;
+      min-width: 280px;
+    }
+
+    .input-group {
+      margin: 20px 0;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 14px 18px;
+      border-radius: 60px;
+      border: 1px solid #FFD8CA;
+      font-family: inherit;
+    }
+
+    .member-dashboard {
+      flex: 1;
+      background: white;
+      border-radius: 40px;
+      padding: 32px;
+    }
+
+    /* Newsletter */
+    .newsletter {
+      background: #FFEEE4;
+      border-radius: 56px;
+      padding: 56px 48px;
+      text-align: center;
+      margin: 40px 0;
+    }
+
+    .newsletter-form {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+
+    .newsletter-form input {
+      padding: 14px 24px;
+      border-radius: 60px;
+      border: none;
+      width: 280px;
+      font-family: inherit;
+    }
+
+    /* Hero */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      margin: 60px 0 80px;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: 3.8rem;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .hero-highlight {
+      background: linear-gradient(120deg, #FFD966, #FFB347);
+      padding: 0 8px;
+      border-radius: 20px;
+      display: inline-block;
+    }
+
+    footer {
+      padding: 48px 0 32px;
+      text-align: center;
+      color: #8F7A6E;
+      border-top: 1px solid #FFE2D4;
+      margin-top: 48px;
+    }
+
+    @media (max-width: 860px) {
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .container {
+        padding: 0 24px;
+      }
+      .navbar {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="gradient-bg" style="border-radius: 0 0 48px 48px;">
+  <div class="container">
+    <div class="navbar">
+      <div class="logo" onclick="showPage('home')">✨ ViviPilates · reformer joy</div>
+      <div class="nav-links">
+        <a onclick="showPage('classes')">Classes</a>
+        <a onclick="showPage('membership')">Membership</a>
+        <a onclick="showPage('timetable')">Timetable</a>
+        <a onclick="showPage('members')">Members</a>
+        <a onclick="showPage('signup')" class="btn-outline">Sign up</a>
+        <button class="btn-primary" onclick="showPage('signup')">Start free trial →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <!-- HOME PAGE -->
+  <div id="home" class="page active">
+    <div class="hero">
+      <div>
+        <div style="font-size:0.8rem; background:#FFDDD0; display:inline-block; padding:6px 16px; border-radius:30px;">✨ spring energy</div>
+        <h1>Move with joy, <span class="hero-highlight">reformer flow</span><br> at ViviPilates</h1>
+        <p style="font-size:1.2rem; margin: 24px 0; color:#4D3C33;">colourful reformer classes, fun community & results that glow. First class only $15.</p>
+        <button class="btn-primary" style="padding: 14px 36px;" onclick="showPage('signup')">✨ Book your first class →</button>
+        <div style="margin-top: 20px;">⭐️⭐️⭐️⭐️⭐️ 250+ happy members</div>
+      </div>
+      <div style="background: linear-gradient(145deg, #FCD9C2, #FFE7CF); border-radius: 48px; padding: 40px; text-align: center;">
+        <i class="fas fa-hand-peace" style="font-size: 6rem; color:#E86F4F;"></i>
+        <div style="font-weight:600; margin-top:12px;">🌈 reformer & giggles guaranteed</div>
+      </div>
+    </div>
+
+    <div class="section-title">💖 why you'll love Vivi <span style="background:#FFF0C0; padding:0 8px; border-radius:30px;">studio</span></div>
+    <div class="card-grid">
+      <div class="fun-card"><i class="fas fa-dumbbell" style="font-size: 2.5rem; color:#E86F4F;"></i><h3 style="margin: 16px 0;">Reformer magic</h3><p>spring-loaded, low-impact but powerful. Feel strong & lengthened.</p></div>
+      <div class="fun-card"><i class="fas fa-music" style="font-size: 2.5rem; color:#C73B6E;"></i><h3 style="margin: 16px 0;">playlist energy</h3><p>upbeat vibes, curated beats every class.</p></div>
+      <div class="fun-card"><i class="fas fa-users" style="font-size: 2.5rem; color:#E86F4F;"></i><h3 style="margin: 16px 0;">community first</h3><p>friYAY classes, member brunch & colorful socks parties.</p></div>
+    </div>
+
+    <div class="newsletter" style="margin-top: 40px;">
+      <i class="fas fa-envelope-open-text" style="font-size: 2.8rem; color:#E86F4F;"></i>
+      <h2>📬 get the good vibes</h2>
+      <p>join the mailletter for playlists, early class access & colourful updates</p>
+      <div class="newsletter-form">
+        <input type="email" id="homeNewsEmail" placeholder="your@email.com">
+        <button class="btn-primary" onclick="subscribeNewsletter('homeNewsEmail', 'homeNewsMsg')">Subscribe → 💌</button>
+      </div>
+      <div id="homeNewsMsg" style="margin-top:12px;"></div>
+    </div>
+  </div>
+
+  <!-- CLASSES PAGE -->
+  <div id="classes" class="page">
+    <div class="section-title">✨ our signature classes</div>
+    <div class="card-grid">
+      <div class="class-card"><i class="fas fa-sun" style="font-size: 2rem; color:#E86F4F;"></i><h3>Sunrise Reformer</h3><p>7:30 AM · energizing flow to start your day</p><button class="btn-small" onclick="showPage('signup')">Book now</button></div>
+      <div class="class-card"><i class="fas fa-fire" style="font-size: 2rem; color:#E86F4F;"></i><h3>Power Reformer</h3><p>6:15 PM · high intensity, full body burn</p><button class="btn-small" onclick="showPage('signup')">Book now</button></div>
+      <div class="class-card"><i class="fas fa-hand-sparkles" style="font-size: 2rem; color:#E86F4F;"></i><h3>Flow & Stretch</h3><p>12:00 PM · flexibility + deep release</p><button class="btn-small" onclick="showPage('signup')">Book now</button></div>
+      <div class="class-card"><i class="fas fa-glass-cheers" style="font-size: 2rem; color:#E86F4F;"></i><h3>Happy Hour Reformer</h3><p>5:30 PM Thu · reformer + good vibes</p><button class="btn-small" onclick="showPage('signup')">Book now</button></div>
+      <div class="class-card"><i class="fas fa-heart" style="font-size: 2rem; color:#E86F4F;"></i><h3>Self-Love Sunday</h3><p>11:00 AM · gentle flow + affirmations</p><button class="btn-small" onclick="showPage('signup')">Book now</button></div>
+      <div class="class-card"><i class="fas fa-moon" style="font-size: 2rem; color:#E86F4F;"></i><h3>Evening Glow</h3><p>7:30 PM Wed · wind down reformer</p><button class="btn-small" onclick="showPage('signup')">Book now</button></div>
+    </div>
+    <div class="newsletter" style="background: #FFF0E4;">
+      <h3>✨ first class only £15 ✨</h3>
+      <button class="btn-primary" onclick="showPage('signup')" style="margin-top: 16px;">Claim your intro offer</button>
+    </div>
+  </div>
+
+  <!-- MEMBERSHIP PAGE -->
+  <div id="membership" class="page">
+    <div class="section-title">💎 membership plans <span style="font-size:1.2rem;">— join the vibrant crew</span></div>
+    <div class="membership-grid">
+      <div class="plan-card"><h3>✨ Drop-in</h3><div class="price">£29</div><p>per class · flexible</p><button class="btn-primary" style="background:#E86F4F; margin-top:16px;" onclick="showPage('signup')">Choose</button></div>
+      <div class="plan-card plan-popular"><h3>🌸 8 classes / month</h3><div class="price">£169</div><p>save 25% · most loved</p><button class="btn-primary" style="background:#C73B6E;" onclick="showPage('signup')">Sign up →</button><div style="background:#FFD966; border-radius:20px; padding:4px 12px; margin-top:12px;">⭐ best value</div></div>
+      <div class="plan-card"><h3>🌈 unlimited reformer</h3><div class="price">£229</div><p>unlimited classes + guest pass</p><button class="btn-primary" style="background:#E86F4F;" onclick="showPage('signup')">Join unlimited</button></div>
+      <div class="plan-card"><h3>👯‍♀️ student / first responder</h3><div class="price">£149</div><p>unlimited · 15% off with ID</p><button class="btn-secondary" onclick="showPage('signup')">Apply →</button></div>
+    </div>
+    <div style="background: #FFF0E4; border-radius: 32px; padding: 32px; text-align: center; margin: 32px 0;">
+      <h3>🎁 all members get:</h3>
+      <p>✓ 10% off Vivi merch ✓ bring-a-friend discount ✓ priority booking ✓ birthday reformer party</p>
+    </div>
+  </div>
+
+  <!-- TIMETABLE PAGE -->
+  <div id="timetable" class="page">
+    <div class="section-title">📅 weekly class timetable</div>
+    <div class="timetable">
+      <div class="class-row"><span class="class-time">MON 8:30 AM</span><span class="class-name">✨ Sunrise Reformer</span><span>Instructor: Vivi</span><button class="btn-small" onclick="showPage('signup')">Book</button></div>
+      <div class="class-row"><span class="class-time">MON 12:00 PM</span><span class="class-name">🌈 Flow & Stretch</span><span>Instructor: Mia</span><button class="btn-small" onclick="showPage('signup')">Book</button></div>
+      <div class="class-row"><span class="class-time">MON 6:15 PM</span><span class="class-name">🔥 Power Reformer</span><span>Instructor: Leo</span><button class="btn-small" onclick="showPage('signup')">Book</button></div>
+      <div class="class-row"><span class="class-time">TUE 9:30 AM</span><span class="class-name">🌸 Pilates & Playlist</span><span>Instructor: Vivi</span><button class="btn-small" onclick="showPage('signup')">Book</button></div>
+      <div class="class-row"><span class="class-time">TUE 5:30 PM</span><span class="class-name">🍹 Happy Hour Reformer</span><span>Instructor: Jess</span><button class="btn-small" onclick="showPage('signup')">Book</button></div>
+      <div class="class-row"><span class="class-time">WED 7:30 AM</span><span class="class-name">🌅 Early Bird Reformer</span><span>Instructor: Mia</span><button class="btn-small" onclick="showPage('signup')">Book</button></div>
+      <div class="class-row"><span class="class-time">THU 12:00 PM</span><span class="class-name">💪 Core & More</span><span>Instructor: Leo</span><button class="btn-small" onclick="showPage('signup')">Book</button></div>
+      <div class="class-row"><span class="class-time">SAT 10:00 AM</span><span class="class-name">🧘‍♀️ Weekend Glow</span><span>Instructor: Mia</span><button class="btn-small" onclick="showPage('signup')">Book</button></div>
+      <div class="class-row"><span class="class-time">SUN 11:00 AM</span><span class="class-name">💕 Self-Love Sunday</span><span>Instructor: Vivi</span><button class="btn-small" onclick="showPage('signup')">Book</button></div>
+    </div>
+  </div>
+
+  <!-- MEMBERS PAGE (Login + Dashboard) -->
+  <div id="members" class="page">
+    <div class="section-title">👋 member area</div>
+    <div class="members-area" id="membersArea">
+      <div class="login-card" id="loginCard">
+        <h3><i class="fas fa-lock"></i> member login</h3>
+        <div class="input-group"><input type="email" id="memberEmail" placeholder="vivi@member.com"></div>
+        <div class="input-group"><input type="password" id="memberPassword" placeholder="password"></div>
+        <button class="btn-primary" id="loginButton" style="background:#C73B6E;">✨ Log in →</button>
+        <p style="margin-top:16px; font-size:0.8rem;">demo: any email works!</p>
+      </div>
+      <div class="member-dashboard" id="memberDashboard" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+          <h3><i class="fas fa-smile-wink"></i> welcome back, <span id="displayName">Member</span>!</h3>
+          <button class="btn-small" id="logoutButton">Logout</button>
+        </div>
+        <hr style="margin: 20px 0; border-color: #FFCFBB;">
+        <p><i class="fas fa-calendar-alt"></i> <strong>Your next class:</strong> 🌸 Flow & Stretch — Tomorrow 12:00 PM</p>
+        <p><i class="fas fa-chart-line"></i> <strong>Visits this month:</strong> 6 / 8</p>
+        <p><i class="fas fa-gift"></i> <strong>Member perk:</strong> 20% off Vivi merch + bring a friend for $10</p>
+        <p><i class="fas fa-ticket-alt"></i> <strong>Credits remaining:</strong> 2 classes (if on 8-class plan)</p>
+        <div style="margin-top: 20px; background: #FFEEE5; border-radius: 24px; padding: 16px;">
+          <i class="fas fa-heart" style="color:#E86F4F;"></i> “I love the community — best decision!” – Emily
+        </div>
+        <button class="btn-secondary" style="margin-top: 20px; width: 100%;" onclick="showPage('timetable')">📅 Book a class →</button>
+      </div>
+    </div>
+    <div class="newsletter" style="background: #FFF0E4;">
+      <h3>🎉 not a member yet?</h3>
+      <button class="btn-primary" onclick="showPage('signup')">Start your trial today →</button>
+    </div>
+  </div>
+
+  <!-- SIGN UP PAGE -->
+  <div id="signup" class="page">
+    <div class="section-title">✨ start your Vivi journey</div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin: 32px 0;">
+      <div style="background: white; border-radius: 48px; padding: 40px; border: 1px solid #FFE3D6;">
+        <h3>🌈 first time? get the intro offer</h3>
+        <div class="price" style="font-size: 3rem;">$15</div>
+        <p>first class · includes reformer + grip socks</p>
+        <hr style="margin: 24px 0;">
+        <div class="input-group"><input type="text" placeholder="Full name" id="signupName"></div>
+        <div class="input-group"><input type="email" placeholder="Email" id="signupEmail"></div>
+        <div class="input-group"><input type="tel" placeholder="Phone"></div>
+        <button class="btn-primary" style="width: 100%;" onclick="alert('🎉 Welcome to ViviPilates! Check your email for class booking link.')">Claim intro class →</button>
+      </div>
+      <div style="background: linear-gradient(135deg, #FFE6F0, #FFF0C0); border-radius: 48px; padding: 40px;">
+        <h3>💖 what's included:</h3>
+        <p>✓ 50-min reformer class</p>
+        <p>✓ complimentary grip socks</p>
+        <p>✓ access to members-only app</p>
+        <p>✓ 10% off first merch purchase</p>
+        <p>✓ community welcome gift</p>
+        <div style="margin-top: 32px;">
+          <h4>✨ membership plans:</h4>
+          <button class="btn-secondary" style="margin-top: 12px;" onclick="showPage('membership')">View all plans →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div>🧘‍♀️ ViviPilates — colourful reformer studio. joy, movement & community.</div>
+    <div style="margin-top:16px;">📍 123 wellness ave | hello@vivipilates.com | insta @vivipilates</div>
+    <div style="margin-top:24px;">© 2025 ViviPilates — designed with framer-like energy ✨</div>
+  </footer>
+</div>
+
+<script>
+  // Page navigation
+  function showPage(pageId) {
+    document.querySelectorAll('.page').forEach(page => {
+      page.classList.remove('active');
+    });
+    document.getElementById(pageId).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Newsletter subscription
+  function subscribeNewsletter(inputId, msgId) {
+    const email = document.getElementById(inputId).value;
+    const msgDiv = document.getElementById(msgId);
+    if (email && email.includes('@')) {
+      msgDiv.innerHTML = '🎉 You\'re in! colourful pilates love will hit your inbox 💖';
+      msgDiv.style.color = '#C73B6E';
+      document.getElementById(inputId).value = '';
+    } else {
+      msgDiv.innerHTML = '✨ please enter a valid email ✨';
+      msgDiv.style.color = '#E86F4F';
+    }
+  }
+
+  // Member login functionality
+  const loginButton = document.getElementById('loginButton');
+  const logoutButton = document.getElementById('logoutButton');
+  const loginCard = document.getElementById('loginCard');
+  const memberDashboard = document.getElementById('memberDashboard');
+  const displayNameSpan = document.getElementById('displayName');
+
+  if (loginButton) {
+    loginButton.addEventListener('click', () => {
+      const email = document.getElementById('memberEmail').value;
+      const name = email.split('@')[0] || 'Member';
+      if (displayNameSpan) displayNameSpan.innerText = name;
+      loginCard.style.display = 'none';
+      memberDashboard.style.display = 'block';
+    });
+  }
+
+  if (logoutButton) {
+    logoutButton.addEventListener('click', () => {
+      loginCard.style.display = 'block';
+      memberDashboard.style.display = 'none';
+      document.getElementById('memberEmail').value = '';
+      document.getElementById('memberPassword').value = '';
+    });
+  }
+
+  // Make logo clickable from any page
+  window.showPage = showPage;
+  window.subscribeNewsletter = subscribeNewsletter;
+</script>
+</body>
+</html>
